@@ -14,13 +14,17 @@ namespace DBUtilityLB
     {
         public IDbBase MyDatabase = null;
 
-        public MSSqlHelper(string connectionStr)
+        public MSSqlHelper(string connectionNodeName)
         {
-            MyDatabase= DBhelper.CreateMsSql(DBhelper.GetConnectionStr(connectionStr));
+            MyDatabase= DBhelper.CreateMsSql(DBhelper.GetConnectionStr(connectionNodeName));
         }
 
+        public MSSqlHelper(string connection,bool isDirectConn)
+        {
+            MyDatabase = DBhelper.CreateMsSql(connection);
+        }
 
-        public  int ExecuteNonQuery(CommandType cmdType, string cmdText, params DbParameter[] commandParameters)
+        public int ExecuteNonQuery(CommandType cmdType, string cmdText, params DbParameter[] commandParameters)
         {
             DbCommand cmd = MyDatabase.CreateCommand();
             using (DbConnection conn = MyDatabase.CreateConnection())
